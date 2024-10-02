@@ -39,7 +39,7 @@ namespace CacheLibrary.CachingStrategy
             {
                 CacheNode node = new(key, value);
                 _cacheNodeMap.Add(key, node);
-                _cacheList.AddFirst(node);
+                _cacheList.AddFirst(node); //From queue perspective adding node to front;
             }
         }
 
@@ -56,8 +56,9 @@ namespace CacheLibrary.CachingStrategy
 
         private void UpdateNodePosition(CacheNode node)
         {
+            //From queue perspective adding node to front;
             _cacheList.Remove(node);
-            _cacheList.AddFirst(node);
+            _cacheList.AddFirst(node); 
         }
 
         public void Update(string key, string value)

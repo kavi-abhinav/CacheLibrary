@@ -14,6 +14,7 @@ namespace CacheLibrary.UnitTests
         [Theory]
         [InlineData(CachingStrategyOptions.FIFO, "name", "Abhinav")]
         [InlineData(CachingStrategyOptions.LRU, "name", "Abhinav")]
+        [InlineData(CachingStrategyOptions.LFU, "name", "Abhinav")]
         public void CacheReturnsCorrectValue(CachingStrategyOptions cacheStrategy, string key, string value)
         {
             //setup
@@ -33,6 +34,7 @@ namespace CacheLibrary.UnitTests
         [Theory]
         [InlineData(CachingStrategyOptions.FIFO)]
         [InlineData(CachingStrategyOptions.LRU)]
+        [InlineData(CachingStrategyOptions.LFU)]
         public void CacheThrowsExceptionIfKeyAlreadyExists(CachingStrategyOptions cacheStrategy)
         {
             //setup
@@ -47,6 +49,7 @@ namespace CacheLibrary.UnitTests
         [Theory]
         [InlineData(CachingStrategyOptions.FIFO)]
         [InlineData(CachingStrategyOptions.LRU)]
+        [InlineData(CachingStrategyOptions.LFU)]
         public void CacheThrowsExceptionIfKeyNotFound(CachingStrategyOptions cacheStrategy)
         {
             //setup
@@ -61,6 +64,7 @@ namespace CacheLibrary.UnitTests
         [Theory]
         [InlineData(CachingStrategyOptions.FIFO)]
         [InlineData(CachingStrategyOptions.LRU)]
+        [InlineData(CachingStrategyOptions.LFU)]
         public void CacheThrowsExceptionDuringUpdateIfKeyNotFound(CachingStrategyOptions cacheStrategy)
         {
             //setup
@@ -74,6 +78,7 @@ namespace CacheLibrary.UnitTests
         [Theory]
         [InlineData(CachingStrategyOptions.FIFO,"id", "1", "2")]
         [InlineData(CachingStrategyOptions.LRU,"id", "1", "2")]
+        [InlineData(CachingStrategyOptions.LFU,"id", "1", "2")]
         public void CacheCorrectlyUpdatesValue(CachingStrategyOptions cacheStrategy, string key, string value, string updatedValue)
         {
             //setup

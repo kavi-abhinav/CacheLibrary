@@ -11,5 +11,7 @@
         internal string Key { get; set; }
 
         internal string Value { get; set; }
+
     }
+
 }
