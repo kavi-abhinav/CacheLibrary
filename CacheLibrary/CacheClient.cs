@@ -28,5 +28,12 @@
             return _cachingStrategy.Get(key);
         }
 
+        public void Update(string key, string value)
+        {
+            _cachingStrategy.Update(key, value);
+        }
+
+
+
     }
 }

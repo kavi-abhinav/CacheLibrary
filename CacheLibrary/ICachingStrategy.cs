@@ -7,6 +7,6 @@
 
         string Get(string key);
 
-        IEnumerable<string> PeekContent();
+        void Update(string key, string value);
     }
 }

@@ -6,7 +6,7 @@
         private Dictionary<string, CacheNode> _cacheNodeMap;
         private LinkedList<CacheNode> _cacheList;
 
-        public FIFOCachingStrategy(int bucketSize)
+        internal FIFOCachingStrategy(int bucketSize)
         {
             _bucketSize = bucketSize;
             _cacheNodeMap = new Dictionary<string, CacheNode>();
@@ -46,17 +46,14 @@
             else throw new ArgumentException($"Cache Key - '{key}' not found.");
         }
 
-        public IEnumerable<string> PeekContent()
+        public void Update(string key, string value)
         {
-            var enumerator = _cacheList.GetEnumerator();
-            var contents = new List<string>();
-            while (enumerator.MoveNext())
+            CacheNode? node;
+            if (_cacheNodeMap.TryGetValue(key, out node))
             {
-                contents.Add($"{enumerator.Current.Key} = {enumerator.Current.Value}");
+                node.Value = value;
             }
-
-            return contents;
+            else throw new ArgumentException($"Cache Key - '{key}' not found.");
         }
-
     }
 }

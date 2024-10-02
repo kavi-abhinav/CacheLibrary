@@ -37,13 +37,48 @@ namespace CacheLibrary.UnitTests
 
         [Fact]
         public void CacheThrowsExceptionIfKeyNotFound()
-        {
+        { 
             //setup
             _cacheClient = new CacheClient(CachingStrategyOptions.FIFO);
 
             //execute and verify
             Assert.Throws<ArgumentException>(() => _cacheClient.Get("non-existing-key"));
 
+        }
+
+
+        [Fact]
+        public void CacheThrowsExceptionDuringUpdateIfKeyNotFound()
+        {
+            //setup
+            _cacheClient = new CacheClient(CachingStrategyOptions.FIFO);
+
+            //execute and verify
+            Assert.Throws<ArgumentException>(() => _cacheClient.Update("non-existing-key", "hello"));
+
+        }
+
+        [Theory]
+        [InlineData("id","1","2")]
+        [InlineData("name", "abhinav", "Abhinav")]
+        public void CacheCorrectlyUpdatesValue(string key, string value, string updatedValue)
+        {
+            //setup
+            _cacheClient = new CacheClient(CachingStrategyOptions.FIFO);
+            _cacheClient.Add(key, value);
+
+            //execute
+            string fetchedValue = _cacheClient.Get(key);
+
+            //verify
+            Assert.Equal(value, fetchedValue);
+
+            //excecute
+            _cacheClient.Update(key,updatedValue);
+            fetchedValue = _cacheClient.Get(key);
+
+            //verify
+            Assert.Equal(updatedValue, fetchedValue);
         }
 
         [Fact]
