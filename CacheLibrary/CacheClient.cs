@@ -1,4 +1,7 @@
-﻿namespace CacheLibrary
+﻿using CacheLibrary.CachingStrategy;
+using CacheLibrary.Factories;
+
+namespace CacheLibrary
 {
     public class CacheClient
     {

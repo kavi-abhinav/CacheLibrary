@@ -1,4 +1,4 @@
-﻿namespace CacheLibrary
+﻿namespace CacheLibrary.CachingStrategy
 {
     internal interface ICachingStrategy
     {

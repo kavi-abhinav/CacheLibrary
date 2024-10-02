@@ -1,4 +1,6 @@
-﻿namespace CacheLibrary
+﻿using CacheLibrary.Models;
+
+namespace CacheLibrary.CachingStrategy
 {
     internal class FIFOCachingStrategy : ICachingStrategy
     {
@@ -16,9 +18,9 @@
         public void Add(string key, string value)
         {
             //Adding to cache first as it might be unsuccesful
-            AddToCache(key,value);
+            AddToCache(key, value);
 
-            if (_cacheNodeMap.Count == _bucketSize+1)
+            if (_cacheNodeMap.Count == _bucketSize + 1)
             {
                 CacheNode firstNode = _cacheList.First();
                 _cacheNodeMap.Remove(firstNode.Key);

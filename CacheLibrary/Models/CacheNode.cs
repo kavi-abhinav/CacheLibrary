@@ -1,4 +1,4 @@
-﻿namespace CacheLibrary
+﻿namespace CacheLibrary.Models
 {
     internal class CacheNode
     {
