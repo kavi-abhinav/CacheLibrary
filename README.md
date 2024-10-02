@@ -8,7 +8,9 @@ Currently the cache client supports following strategies :
 1. FIFO (First In First Out) :
     - The eviction logic is based on fifo which means cache key which was added first is removed first when bucket size is reached.
     - Bucket Size : An integer value that represents max no of keys cache can hold, after which it will start eviction based on FIFO
-  
+2. LRU (Least Recently used out) :
+    - The eviction logic is based on LRU which means cache key which is least recently used is removed when bucket size is reached.
+    - Bucket Size : An integer value that represents max no of keys cache can hold, after which it will start eviction based on FIFO 
 ## Version and Dependencies
 -  Target Framework - .Net 8
 
