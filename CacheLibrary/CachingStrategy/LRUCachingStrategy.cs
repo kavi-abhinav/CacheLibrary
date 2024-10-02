@@ -33,7 +33,7 @@ namespace CacheLibrary.CachingStrategy
         {
             if (_cacheNodeMap.ContainsKey(key))
             {
-                throw new ArgumentException($"Cache key {key} already exists");
+                throw new ArgumentException($"Cache Key - '{key}' already exists. Cache keys must be unique.");
             }
             else
             {
@@ -51,7 +51,7 @@ namespace CacheLibrary.CachingStrategy
                 UpdateNodePosition(node);
                 return node.Value;
             }
-            else throw new ArgumentException($"Cache key {key} does not exists");
+            else throw new ArgumentException($"Cache key - '{key}' does not exists");
         }
 
         private void UpdateNodePosition(CacheNode node)
@@ -68,7 +68,7 @@ namespace CacheLibrary.CachingStrategy
                 node.Value = value;
                 UpdateNodePosition(node);
             }
-            else throw new ArgumentException($"Cache key {key} does not exists");
+            else throw new ArgumentException($"Cache key - '{key}' does not exists");
         }
     }
 }

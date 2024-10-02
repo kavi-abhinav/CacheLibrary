@@ -35,7 +35,7 @@ namespace CacheLibrary.CachingStrategy
             {
                 _cacheList.AddLast(node);
             }
-            else throw new ArgumentException($"Cache Key - '{key}' already exists. Cache keys are supposed to be unique.");
+            else throw new ArgumentException($"Cache Key - '{key}' already exists. Cache keys must be unique.");
         }
 
         public string Get(string key)
@@ -45,7 +45,7 @@ namespace CacheLibrary.CachingStrategy
             {
                 return node.Value;
             }
-            else throw new ArgumentException($"Cache Key - '{key}' not found.");
+            else throw new ArgumentException($"Cache key - '{key}' does not exists");
         }
 
         public void Update(string key, string value)
@@ -55,7 +55,7 @@ namespace CacheLibrary.CachingStrategy
             {
                 node.Value = value;
             }
-            else throw new ArgumentException($"Cache Key - '{key}' not found.");
+            else throw new ArgumentException($"Cache key - '{key}' does not exists");
         }
     }
 }
