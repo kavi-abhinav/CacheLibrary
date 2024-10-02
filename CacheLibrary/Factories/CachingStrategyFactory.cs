@@ -13,6 +13,9 @@ namespace CacheLibrary.Factories
                 case CachingStrategyOptions.FIFO:
                     strategy = new FIFOCachingStrategy(bucketSize);
                     break;
+                case CachingStrategyOptions.LRU:
+                    strategy = new LRUCachingStrategy(bucketSize);
+                    break;
                 default:
                     strategy = new FIFOCachingStrategy(bucketSize); //defaults to fifo strategy
                     break;

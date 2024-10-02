@@ -2,6 +2,7 @@
 {
     public enum CachingStrategyOptions
     {
-        FIFO = 0
+        FIFO = 0,
+        LRU = 1
     }
 }
