@@ -23,16 +23,25 @@ namespace CacheLibrary
 
         public void Add(string key, string value)
         {
+            ArgumentException.ThrowIfNullOrWhiteSpace(key, nameof(key));
+            ArgumentException.ThrowIfNullOrWhiteSpace(value, nameof(value));
+
             _cachingStrategy.Add(key, value);
         }
 
         public string Get(string key)
         {
+            ArgumentException.ThrowIfNullOrWhiteSpace(key, nameof(key));
+
             return _cachingStrategy.Get(key);
         }
 
         public void Update(string key, string value)
         {
+
+            ArgumentException.ThrowIfNullOrWhiteSpace(key, nameof(key));
+            ArgumentException.ThrowIfNullOrWhiteSpace(value, nameof(value));
+
             _cachingStrategy.Update(key, value);
         }
 
