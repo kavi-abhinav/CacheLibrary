@@ -1,5 +1,7 @@
 ﻿using CacheLibrary.CachingStrategy;
 using CacheLibrary.Factories;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace CacheLibrary
 {
@@ -45,7 +47,26 @@ namespace CacheLibrary
             _cachingStrategy.Update(key, value);
         }
 
+        public void Add<T>(string key, T value)
+        {
+            var serializedString = JsonSerializer.Serialize(value);
+            Add(key, serializedString);
+        }
 
+        public T Get<T>(string key)
+        {
+            var serializedString = Get(key);
+            var desializedValue = JsonSerializer.Deserialize<T>(serializedString);
 
+            return desializedValue == null
+                ? throw new Exception($"Cannot retrieve value for the Cache key - '{key}'")
+                : desializedValue;
+        }
+
+        public void Update<T>(string key, T value)
+        {
+            var serializedString = JsonSerializer.Serialize(value, options: new JsonSerializerOptions { IncludeFields = true });
+            Update(key, serializedString);
+        }
     }
 }

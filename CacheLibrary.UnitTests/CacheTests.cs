@@ -1,4 +1,6 @@
-﻿namespace CacheLibrary.UnitTests
+﻿using System.Text.Json;
+
+namespace CacheLibrary.UnitTests
 {
     public class CacheTests
     {
@@ -181,5 +183,133 @@
         }
 
 
+        //Generic Tests
+
+        [Theory]
+        [InlineData(CachingStrategyOptions.FIFO)]
+        [InlineData(CachingStrategyOptions.LRU)]
+        [InlineData(CachingStrategyOptions.LFU)]
+        public void CacheWorksWithIntegersAsExpected(CachingStrategyOptions cacheStrategy)
+        {
+            //setup
+            _cacheClient = new CacheClient(cacheStrategy);
+
+            //execute 
+            _cacheClient.Add("input", 1);
+            var fetchedValue = _cacheClient.Get<int>("input");
+
+            //verify
+            Assert.IsType<int>(fetchedValue);
+            Assert.Equal(1, fetchedValue);
+
+            _cacheClient.Update("input", 2);
+            fetchedValue = _cacheClient.Get<int>("input");
+
+            //verify
+            Assert.IsType<int>(fetchedValue);
+            Assert.Equal(2, fetchedValue);
+
+
+        }
+
+
+        [Theory]
+        [InlineData(CachingStrategyOptions.FIFO)]
+        [InlineData(CachingStrategyOptions.LRU)]
+        [InlineData(CachingStrategyOptions.LFU)]
+        public void CacheWorksWithBooleanAsExpected(CachingStrategyOptions cacheStrategy)
+        {
+            //setup
+            _cacheClient = new CacheClient(cacheStrategy);
+
+            //execute 
+            _cacheClient.Add("input", true);
+            var fetchedValue = _cacheClient.Get<bool>("input");
+
+            //verify
+            Assert.IsType<bool>(fetchedValue);
+            Assert.True(fetchedValue);
+
+            _cacheClient.Update("input", false);
+            fetchedValue = _cacheClient.Get<bool>("input");
+
+            //verify
+            Assert.IsType<bool>(fetchedValue);
+            Assert.False(fetchedValue);
+
+        }
+
+
+        [Theory]
+        [InlineData(CachingStrategyOptions.FIFO)]
+        [InlineData(CachingStrategyOptions.LRU)]
+        [InlineData(CachingStrategyOptions.LFU)]
+        public void CacheWorksWithObjectAsExpected(CachingStrategyOptions cacheStrategy)
+        {
+            //setup
+            _cacheClient = new CacheClient(cacheStrategy);
+            TestEmployee newEmployee = new()
+            {
+                Id = "1",
+                Name = "Abhinav"
+            };
+
+            //execute 
+            _cacheClient.Add("input", newEmployee);
+            var fetchedValue = _cacheClient.Get<TestEmployee>("input");
+
+            //verify
+            Assert.IsType<TestEmployee>(fetchedValue);
+            Assert.Equal(newEmployee, fetchedValue);
+
+
+            newEmployee.Name = "Rahul";
+            _cacheClient.Update("input", newEmployee);
+            fetchedValue = _cacheClient.Get<TestEmployee>("input");
+
+            //verify
+            Assert.IsType<TestEmployee>(fetchedValue);
+            Assert.Equal(newEmployee, fetchedValue);
+
+        }
+
+        [Theory]
+        [InlineData(CachingStrategyOptions.FIFO)]
+        [InlineData(CachingStrategyOptions.LRU)]
+        [InlineData(CachingStrategyOptions.LFU)]
+        public void CacheThrowsJsonExceptionWhenFetchingWithIncorrectType(CachingStrategyOptions cacheStrategy)
+        {
+            //setup
+            _cacheClient = new CacheClient(cacheStrategy);
+            TestEmployee newEmployee = new()
+            {
+                Id = "1",
+                Name = "Abhinav"
+            };
+
+            //execute and verify
+            _cacheClient.Add("input", newEmployee);
+            Assert.Throws<JsonException>(() => _cacheClient.Get<int>("input"));
+        }
+    }
+
+    public class TestEmployee
+    {
+        public string? Id { get;  set; }
+
+        public string? Name { get; set; }
+
+        public override bool Equals(Object? obj)
+        {
+            if (obj == null || !(obj is TestEmployee))
+                return false;
+
+            return  this.Id == ((TestEmployee)obj).Id && this.Name == ((TestEmployee)obj).Name;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
